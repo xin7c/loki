@@ -81,7 +81,7 @@ func InitWsServer() *socketio.Server{
 	server.OnEvent("/", "chat", func(s socketio.Conn, msg, room, username string) string {
 		//s.SetContext(msg)
 		//log.Println("/ notice => ", s.URL().RawQuery)
-		log.Println("chat:", msg, room)
+		log.Printf("[聊天信息]%s说: %s @ %s", username, msg, room)
 		//log.Println("notice s.Context().(string)", s.Context().(string))
 		//s.Emit("chat", "chat: " + msg + " SID:/ => chat: " + s.ID())
 		server.BroadcastToRoom("/", room,"chat",
