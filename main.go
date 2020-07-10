@@ -7,7 +7,6 @@ import (
 	v1 "loki/routers/v1"
 )
 
-
 func main() {
 	// 创建一个默认的路由引擎
 	r := gin.Default()

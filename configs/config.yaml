@@ -1,0 +1,11 @@
+Database:
+  DBType: mysql
+  Username: root
+  Password: 123456
+  Host: 127.0.0.1:3306
+  DBName: loki
+  TablePrefix: Loki_
+  Charset: utf8
+  Parsetime: True
+  MaxIdleConns: 10
+  MaxOpenConns: 10

@@ -7,6 +7,7 @@ import (
 	"net/url"
 	"time"
 )
+
 type Msg struct {
 	UserId    string   `json:"userId"`
 	Text      string   `json:"text"`
@@ -15,7 +16,7 @@ type Msg struct {
 	Rooms     []string `json:"rooms"`
 }
 
-func InitWsServer() *socketio.Server{
+func InitWsServer() *socketio.Server {
 	server, err := socketio.NewServer(nil)
 	if err != nil {
 		log.Fatal(err)
@@ -33,10 +34,10 @@ func InitWsServer() *socketio.Server{
 		log.Printf("连接事件: 用户加入的房间号[%+#v]", s.Rooms())
 		log.Printf("连接事件: 当前系统所有房间[%+#v]", roomlist)
 		connMsg := map[string]interface{}{
-			"msg": fmt.Sprintf("conn:sid[%s]", s.ID()),
-			"connid": s.ID(),
+			"msg":     fmt.Sprintf("conn:sid[%s]", s.ID()),
+			"connid":  s.ID(),
 			"roomlen": roomlen,
-			"rooms": s.Rooms(),
+			"rooms":   s.Rooms(),
 		}
 		s.Emit("connected", connMsg)
 		//s.Emit("conn", m)
@@ -50,12 +51,12 @@ func InitWsServer() *socketio.Server{
 		log.Println(username + "加入房间@ " + room)
 		roomlen := server.RoomLen("/", room)
 		roomlist := server.Rooms("/")
-		server.BroadcastToRoom("/", room,"join",
+		server.BroadcastToRoom("/", room, "join",
 			map[string]interface{}{
-				"msg": fmt.Sprintf("[%s]加入房间%s[@%d]", username,room,time.Now().Unix()),
-				"roomid": room,
-				"roomlen": roomlen,
-				"roomlist": roomlist,//s.Rooms(),
+				"msg":      fmt.Sprintf("[%s]加入房间%s[@%d]", username, room, time.Now().Unix()),
+				"roomid":   room,
+				"roomlen":  roomlen,
+				"roomlist": roomlist, //s.Rooms(),
 			})
 		//msg := Msg{s.ID(), "<= " + s.ID() + " join " + room, "state", s.Namespace(), s.Rooms()}
 		//for k,v := range server.Rooms("/"){
@@ -84,9 +85,9 @@ func InitWsServer() *socketio.Server{
 		log.Printf("[聊天信息]%s说: %s @ %s", username, msg, room)
 		//log.Println("notice s.Context().(string)", s.Context().(string))
 		//s.Emit("chat", "chat: " + msg + " SID:/ => chat: " + s.ID())
-		server.BroadcastToRoom("/", room,"chat",
+		server.BroadcastToRoom("/", room, "chat",
 			map[string]interface{}{
-				"msg": fmt.Sprintf("[%s]在房间%s[@%d]说: %s", username,room,time.Now().Unix(), msg),
+				"msg": fmt.Sprintf("[%s]在房间%s[@%d]说: %s", username, room, time.Now().Unix(), msg),
 			})
 		return "recv " + msg
 	})
@@ -95,7 +96,7 @@ func InitWsServer() *socketio.Server{
 		//log.Println("/ notice => ", s.URL().RawQuery)
 		log.Println("/ joinRoom =>", msg, s.ID())
 		//log.Println("notice s.Context().(string)", s.Context().(string))
-		s.Emit("joinRoom", "/ => joinRoom "  + " SID:/ => notice: " + s.ID())
+		s.Emit("joinRoom", "/ => joinRoom "+" SID:/ => notice: "+s.ID())
 		return "recv "
 	})
 	//server.OnEvent("/", "notice", func(s socketio.Conn, msg string) {
@@ -127,7 +128,7 @@ func InitWsServer() *socketio.Server{
 		s.SetContext(msg)
 		log.Println("chat => ", s.URL().RawQuery)
 		log.Println("chat => notice:", msg)
-		s.Emit("chat", "chat recv " + msg)
+		s.Emit("chat", "chat recv "+msg)
 		return "recv " + msg
 	})
 	//server.OnError("/chat", func(s socketio.Conn, e error) {
