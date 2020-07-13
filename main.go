@@ -3,9 +3,44 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"log"
+	"loki/global"
+	"loki/internal/model"
+	"loki/middleware"
+	"loki/pkg/setting"
 	. "loki/routers"
 	v1 "loki/routers/v1"
 )
+
+func setupSetting() error {
+	lokiSetting, err := setting.NewSetting()
+	if err != nil {
+		return err
+	}
+	if err = lokiSetting.ReadSection("Database", &global.DatabaseSetting); err != nil {
+		return err
+	}
+	return nil
+}
+
+func setupDBEngine() error {
+	var err error
+	global.DBEngine, err = model.NewDBEngine(global.DatabaseSetting)
+	if err != nil{
+		return err
+	}
+	return nil
+}
+
+func init() {
+	err := setupSetting()
+	if err != nil {
+		log.Fatalf("setupSetting err: %v", err)
+	}
+	err = setupDBEngine()
+	if err != nil {
+		log.Fatalf("setupDBEngine err: %v", err)
+	}
+}
 
 func main() {
 	// 创建一个默认的路由引擎
@@ -15,14 +50,11 @@ func main() {
 	defer server.Close()
 
 	apiv1 := r.Group("/api/v1")
-	//apiv1.Use(middleware.TimeNow())
+	apiv1.Use(middleware.TimeNow())
 	apiv1.Use(Cors())
 	{
 		// ping
 		apiv1.GET("/ping", v1.Ping)
-		apiv1.GET("/ws", v1.Ws)
-		apiv1.GET("/socket.io/*any", gin.WrapH(server))
-		apiv1.POST("/socket.io/*any", gin.WrapH(server))
 	}
 	//r.Use(Cors())
 	r.GET("/ws", v1.Ws)

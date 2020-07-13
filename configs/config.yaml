@@ -2,7 +2,7 @@ Database:
   DBType: mysql
   Username: root
   Password: 123456
-  Host: 127.0.0.1:3306
+  Host: 10.60.129.61:3306
   DBName: loki
   TablePrefix: Loki_
   Charset: utf8
