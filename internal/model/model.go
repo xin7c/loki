@@ -13,7 +13,7 @@ type Model struct {
 	ModifiedOn int `json:"modified_on"`
 }
 
-func NewDBEngine(databaseSettingS *setting.DatabaseSettingS)(*gorm.DB, error)  {
+func NewDBEngine(databaseSettingS *setting.DatabaseSettingS) (*gorm.DB, error) {
 	db, err := gorm.Open(databaseSettingS.DBType, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=%s&parseTime=%t&loc=Local",
 		databaseSettingS.Username,
 		databaseSettingS.Password,
@@ -21,7 +21,7 @@ func NewDBEngine(databaseSettingS *setting.DatabaseSettingS)(*gorm.DB, error)  {
 		databaseSettingS.DBName,
 		databaseSettingS.Charset,
 		databaseSettingS.Parsetime))
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
 	db.SingularTable(true)

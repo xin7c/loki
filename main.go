@@ -8,7 +8,8 @@ import (
 	"loki/middleware"
 	"loki/pkg/setting"
 	. "loki/routers"
-	v1 "loki/routers/v1"
+	"loki/routers/v1"
+	"time"
 )
 
 func setupSetting() error {
@@ -19,13 +20,17 @@ func setupSetting() error {
 	if err = lokiSetting.ReadSection("Database", &global.DatabaseSetting); err != nil {
 		return err
 	}
+	if err = lokiSetting.ReadSection("JWT", &global.JWTSetting); err != nil {
+		return err
+	}
+	global.JWTSetting.Expire *= time.Second
 	return nil
 }
 
 func setupDBEngine() error {
 	var err error
 	global.DBEngine, err = model.NewDBEngine(global.DatabaseSetting)
-	if err != nil{
+	if err != nil {
 		return err
 	}
 	return nil
@@ -55,8 +60,11 @@ func main() {
 	{
 		// ping
 		apiv1.GET("/ping", v1.Ping)
+		apiv1.GET("/as", v1.Auths)
+
 	}
 	//r.Use(Cors())
+	r.GET("/auth", v1.GetAuth)
 	r.GET("/ws", v1.Ws)
 	r.GET("/socket.io/*any", gin.WrapH(server))
 	r.POST("/socket.io/*any", gin.WrapH(server))

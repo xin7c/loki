@@ -1,5 +1,7 @@
 package setting
 
+import "time"
+
 type DatabaseSettingS struct {
 	DBType       string
 	Username     string
@@ -11,6 +13,12 @@ type DatabaseSettingS struct {
 	Parsetime    bool
 	MaxIdleConns int
 	MaxOpenConns int
+}
+
+type JWTSettingS struct {
+	Secret string
+	Issuer string
+	Expire time.Duration
 }
 
 func (s *Setting) ReadSection(k string, v interface{}) error {

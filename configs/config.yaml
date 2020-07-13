@@ -9,3 +9,8 @@ Database:
   Parsetime: True
   MaxIdleConns: 10
   MaxOpenConns: 10
+
+JWT:
+  Secret: xuchu-Secret
+  Issuer: loki-service
+  Expire: 7200
