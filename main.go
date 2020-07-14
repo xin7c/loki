@@ -4,8 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"loki/global"
+	"loki/internal/middleware"
 	"loki/internal/model"
-	"loki/middleware"
 	"loki/pkg/setting"
 	. "loki/routers"
 	"loki/routers/v1"
@@ -56,11 +56,12 @@ func main() {
 
 	apiv1 := r.Group("/api/v1")
 	apiv1.Use(middleware.TimeNow())
-	apiv1.Use(Cors())
+	apiv1.Use(Cors(), middleware.JWT())
 	{
 		// ping
 		apiv1.GET("/ping", v1.Ping)
 		apiv1.GET("/as", v1.Auths)
+		apiv1.POST("/userinfo", v1.UserInfo)
 
 	}
 	//r.Use(Cors())

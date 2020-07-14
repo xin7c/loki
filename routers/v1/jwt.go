@@ -11,19 +11,15 @@ import (
 func GetAuth(c *gin.Context) {
 	// 此处解析前端传递的参数，返回token
 	code := e.ERROR
-	t, err := app.GenerateToken("xuchu", "11")
+	t, err := app.GenerateToken("ccc", "11")
 	if err != nil{
 		log.Println(err)
 	}
-	m, err := app.ParseToken(t)
-	if err !=nil{
-		log.Println("ParseToken failed!!", err)
-	}
+
 	code = e.SUCCESS
 	c.JSON(http.StatusOK, gin.H{
 		"code": code,
 		"token":  t,
-		"m": m,
 	})
 	return
 }
