@@ -12,14 +12,14 @@ func GetAuth(c *gin.Context) {
 	// 此处解析前端传递的参数，返回token
 	code := e.ERROR
 	t, err := app.GenerateToken("ccc", "11")
-	if err != nil{
+	if err != nil {
 		log.Println(err)
 	}
 
 	code = e.SUCCESS
 	c.JSON(http.StatusOK, gin.H{
-		"code": code,
-		"token":  t,
+		"code":  code,
+		"token": t,
 	})
 	return
 }

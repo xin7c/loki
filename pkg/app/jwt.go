@@ -1,11 +1,10 @@
 package app
 
 import (
-	"crypto/md5"
-	"encoding/hex"
 	"github.com/dgrijalva/jwt-go"
 	"log"
 	"loki/global"
+	"loki/pkg/util"
 	"time"
 )
 
@@ -13,14 +12,6 @@ type Claims struct {
 	AppKey    string `json:"app_key"`
 	AppSecret string `json:"app_secret"`
 	jwt.StandardClaims
-}
-
-func md(str string) string {
-	h := md5.New()
-	h.Write([]byte(str))
-	s := hex.EncodeToString(h.Sum(nil))
-	log.Println("md5:",str, s)
-	return s
 }
 
 func GetJWTSecret() []byte {
@@ -32,8 +23,8 @@ func GenerateToken(appKey, appSecret string) (token string, err error) {
 	nowTime := time.Now()
 	expireTime := nowTime.Add(global.JWTSetting.Expire)
 	claims := Claims{
-		AppKey:    md(appKey),
-		AppSecret: md(appSecret),
+		AppKey:    util.EncodeMD5(appKey),
+		AppSecret: util.EncodeMD5(appSecret),
 		//AppKey:    appKey,
 		//AppSecret: appSecret,
 		StandardClaims: jwt.StandardClaims{

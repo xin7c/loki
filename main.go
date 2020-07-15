@@ -9,6 +9,7 @@ import (
 	"loki/pkg/setting"
 	. "loki/routers"
 	"loki/routers/v1"
+	"loki/routers/v1/user"
 	"time"
 )
 
@@ -66,6 +67,7 @@ func main() {
 	}
 	//r.Use(Cors())
 	r.GET("/auth", v1.GetAuth)
+	r.POST("/add", user.Add)
 	r.GET("/ws", v1.Ws)
 	r.GET("/socket.io/*any", gin.WrapH(server))
 	r.POST("/socket.io/*any", gin.WrapH(server))

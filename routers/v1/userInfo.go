@@ -16,7 +16,7 @@ func UserInfo(c *gin.Context) {
 		code = e.INVALID_PARAMS
 	} else {
 		_, err := app.ParseToken(token)
-		if err !=nil{
+		if err != nil {
 			switch err.(*jwt.ValidationError).Errors {
 			case jwt.ValidationErrorExpired:
 				code = e.ERROR_AUTH_CHECK_TOKEN_TIMEOUT
@@ -29,7 +29,7 @@ func UserInfo(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{
 		"code": code,
-		"msg": e.GetMsg(code),
+		"msg":  e.GetMsg(code),
 	})
 	return
 }
