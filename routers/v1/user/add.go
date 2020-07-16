@@ -15,7 +15,7 @@ func Add(c *gin.Context) {
 	var userStruct model.User
 	err := c.ShouldBindJSON(&userStruct)
 	if err != nil {
-		log.Println("c.BindJSON", err)
+		log.Printf("c.BindJSON解析失败 %s", err)
 	}
 	log.Printf("[%v,%v]", userStruct.Username, userStruct.Password)
 	if userStruct.Username != "" && userStruct.Password != "" {
