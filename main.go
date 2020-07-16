@@ -62,12 +62,13 @@ func main() {
 		// ping
 		apiv1.GET("/ping", v1.Ping)
 		apiv1.GET("/as", v1.Auths)
-		apiv1.POST("/userinfo", v1.UserInfo)
+		apiv1.POST("/userinfo", user.UserInfo)
 
 	}
 	//r.Use(Cors())
 	r.GET("/auth", v1.GetAuth)
 	r.POST("/add", user.Add)
+	r.POST("/login", user.Login)
 	r.GET("/ws", v1.Ws)
 	r.GET("/socket.io/*any", gin.WrapH(server))
 	r.POST("/socket.io/*any", gin.WrapH(server))

@@ -13,6 +13,7 @@ var MsgFlags = map[int]string{
 	ERROR_AUTH:                     "Token错误",
 	LOGIN_INVALID_PARAMS:           "登录参数错误",
 	LOGIN_FAILED:                   "登录失败",
+	DUPLICATE_USERNAME:             "用户名重复",
 }
 
 func GetMsg(code int) string {

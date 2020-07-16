@@ -13,4 +13,5 @@ const (
 	ERROR_AUTH                     = 20004
 	LOGIN_INVALID_PARAMS           = 30000
 	LOGIN_FAILED                   = 30001
+	DUPLICATE_USERNAME             = 30002
 )

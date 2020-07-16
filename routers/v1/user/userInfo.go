@@ -1,4 +1,4 @@
-package v1
+package user
 
 import (
 	"github.com/dgrijalva/jwt-go"
@@ -15,7 +15,7 @@ func UserInfo(c *gin.Context) {
 	if token == "" {
 		code = e.INVALID_PARAMS
 	} else {
-		_, err := app.ParseToken(token)
+		m, err := app.ParseToken(token)
 		if err != nil {
 			switch err.(*jwt.ValidationError).Errors {
 			case jwt.ValidationErrorExpired:
@@ -25,6 +25,7 @@ func UserInfo(c *gin.Context) {
 			}
 			log.Println("ParseToken failed!!", err)
 		}
+		log.Println(m.AppKey, m.AppSecret)
 	}
 
 	c.JSON(http.StatusOK, gin.H{
