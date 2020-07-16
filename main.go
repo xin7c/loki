@@ -69,6 +69,7 @@ func main() {
 	r.GET("/auth", v1.GetAuth)
 	r.POST("/add", user.Add)
 	r.POST("/login", user.Login)
+	r.GET("/get_users", user.GetUsers)
 	r.GET("/ws", v1.Ws)
 	r.GET("/socket.io/*any", gin.WrapH(server))
 	r.POST("/socket.io/*any", gin.WrapH(server))

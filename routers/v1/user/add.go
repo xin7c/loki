@@ -19,6 +19,19 @@ func Add(c *gin.Context) {
 	}
 	log.Printf("[%v,%v]", userStruct.Username, userStruct.Password)
 	if userStruct.Username != "" && userStruct.Password != "" {
+		// 判断用户名是否存在
+		// 存在：true
+		// 不存在：false
+		userExist := util.CheckUserExist(userStruct.Username)
+		if userExist == true {
+			log.Printf("用户名%s已存在！", userStruct.Username)
+			code = e.DUPLICATE_USERNAME
+			c.JSON(http.StatusOK, gin.H{
+				"code": code,
+				"msg":  e.MsgFlags[code],
+			})
+			return
+		}
 		// 用户密码加密
 		encodePWD, encodePasswordError := util.EncodePassword(userStruct.Password)
 		if encodePasswordError != nil {
