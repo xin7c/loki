@@ -23,7 +23,7 @@ func Add(c *gin.Context) {
 		// 存在：true
 		// 不存在：false
 		userExist := util.CheckUserExist(userStruct.Username)
-		if userExist == true {
+		if userExist {
 			log.Printf("用户名%s已存在！", userStruct.Username)
 			code = e.DUPLICATE_USERNAME
 			c.JSON(http.StatusOK, gin.H{
