@@ -31,12 +31,18 @@ func GetUserInfo(c *gin.Context) {
 				code = e.ERROR_AUTH_CHECK_TOKEN_FAIL
 			}
 			log.Println("解析token失败 ParseToken failed!!", err)
+			c.JSON(http.StatusOK, gin.H{
+				"code": code,
+				"msg":  e.GetMsg(code),
+			})
+			return
 		}
 		log.Println("解析token是否正确:", m.AppKey, m.AppSecret)
 	}
 	// 获取username并查询权限信息
 	var user model.User
 	err = c.ShouldBindJSON(&user)
+	// log.Println("获取username并查询权限信息: ",user)
 	if err != nil {
 		log.Printf("获取username并查询权限信息 绑定结构体user: %s", err)
 	}
@@ -53,8 +59,14 @@ func GetUserInfo(c *gin.Context) {
 	err = user.GetUserInfo(global.DBEngine)
 	if err != nil {
 		log.Printf("userInfo.GetUserInfo(global.DBEngine): %s", err)
+		code = e.USER_NOT_FOUND
+		c.JSON(http.StatusOK, gin.H{
+			"code": code,
+			"msg":  e.GetMsg(code),
+		})
+		return
 	}
-	//log.Println(user)
+	// log.Println("user.GetUserInfo(global.DBEngine): ",user)
 	c.JSON(http.StatusOK, gin.H{
 		"code": code,
 		"msg":  e.GetMsg(code),

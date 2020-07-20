@@ -31,7 +31,7 @@ func JWT() gin.HandlerFunc {
 				default:
 					ecode = e.ERROR_AUTH_CHECK_TOKEN_FAIL
 				}
-				log.Println("ParseToken failed!!", err)
+				log.Printf("[middleware]ParseToken failed!! %s", err)
 			}
 		}
 		if ecode != e.SUCCESS {

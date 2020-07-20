@@ -28,13 +28,9 @@ func (user *User) CheckUserExist(db *gorm.DB) error {
 }
 
 func (user *User) GetUserInfo(db *gorm.DB) error {
-	err := db.Where("username = ?", user.Username).
+	return db.Where("username = ?", user.Username).
 		First(&user).
 		Error
-	if err != nil {
-		return err
-	}
-	return nil
 }
 
 type Users []User

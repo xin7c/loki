@@ -22,10 +22,6 @@ func Login(c *gin.Context) {
 	log.Println(user)
 	//判断提交的用户名是否存在
 	err = user.CheckUserExist(global.DBEngine)
-	//err = global.DBEngine.
-	//	Where("username = ?", user.Username).
-	//	First(&user).
-	//	Error
 	if err != nil {
 		log.Printf("用户名不存在: %s", err)
 		code := e.USER_NOT_FOUND

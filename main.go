@@ -59,17 +59,17 @@ func main() {
 	apiv1.Use(middleware.TimeNow())
 	apiv1.Use(Cors(), middleware.JWT())
 	{
-		// ping
 		apiv1.GET("/ping", v1.Ping)
 		apiv1.GET("/as", v1.Auths)
 		apiv1.POST("/userinfo", user.GetUserInfo)
+		apiv1.POST("/get_users", user.GetUsers)
 
 	}
 	//r.Use(Cors())
 	r.GET("/auth", v1.GetAuth)
 	r.POST("/add", user.Add)
 	r.POST("/login", user.Login)
-	r.GET("/get_users", user.GetUsers)
+	r.GET("/logout", user.Logout)
 	r.GET("/ws", v1.Ws)
 	r.GET("/socket.io/*any", gin.WrapH(server))
 	r.POST("/socket.io/*any", gin.WrapH(server))

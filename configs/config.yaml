@@ -11,6 +11,6 @@ Database:
   MaxOpenConns: 10
 
 JWT:
-  Secret: xuchu-Secret
+  Secret: loki-Secret
   Issuer: loki-service
   Expire: 7200
