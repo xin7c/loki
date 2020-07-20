@@ -14,4 +14,6 @@ const (
 	LOGIN_INVALID_PARAMS           = 30000
 	LOGIN_FAILED                   = 30001
 	DUPLICATE_USERNAME             = 30002
+	USER_NOT_FOUND                 = 30003
+	USERINFO_CHECK_JWT_FAILED      = 30004
 )

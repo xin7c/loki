@@ -12,8 +12,6 @@ type User struct {
 	Usertype sql.NullString `json:"user_type" gorm:"column:user_type;default:'dev'"`
 }
 
-type Users []User
-
 func (user User) Add(db *gorm.DB) error {
 	return db.Create(&user).Error
 }
@@ -21,6 +19,25 @@ func (user User) Add(db *gorm.DB) error {
 func (user User) GetUsers(db *gorm.DB) error {
 	return db.Create(&user).Error
 }
+
+func (user *User) CheckUserExist(db *gorm.DB) error {
+	return db.
+		Where("username = ?", user.Username).
+		First(&user).
+		Error
+}
+
+func (user *User) GetUserInfo(db *gorm.DB) error {
+	err := db.Where("username = ?", user.Username).
+		First(&user).
+		Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type Users []User
 
 func (users Users) Find(db *gorm.DB) (Users, error) {
 	err := db.Find(&users).Error

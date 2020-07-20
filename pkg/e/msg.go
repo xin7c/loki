@@ -14,6 +14,8 @@ var MsgFlags = map[int]string{
 	LOGIN_INVALID_PARAMS:           "登录参数错误",
 	LOGIN_FAILED:                   "登录失败",
 	DUPLICATE_USERNAME:             "用户名重复",
+	USER_NOT_FOUND:                 "用户不存在",
+	USERINFO_CHECK_JWT_FAILED:      "用户信息校验失败",
 }
 
 func GetMsg(code int) string {

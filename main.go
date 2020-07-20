@@ -62,7 +62,7 @@ func main() {
 		// ping
 		apiv1.GET("/ping", v1.Ping)
 		apiv1.GET("/as", v1.Auths)
-		apiv1.POST("/userinfo", user.UserInfo)
+		apiv1.POST("/userinfo", user.GetUserInfo)
 
 	}
 	//r.Use(Cors())
