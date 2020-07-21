@@ -27,7 +27,7 @@ func Login(c *gin.Context) {
 		code := e.USER_NOT_FOUND
 		c.JSON(http.StatusOK, gin.H{
 			"code": code,
-			"msg":  e.MsgFlags[code],
+			"message":  e.MsgFlags[code],
 		})
 		return
 	}
@@ -43,10 +43,13 @@ func Login(c *gin.Context) {
 			log.Printf("passwordIsOk - 生成token err: %s", err)
 		}
 		c.JSON(http.StatusOK, gin.H{
-			"code":     code,
-			"msg":      e.MsgFlags[code],
-			"username": user.Username,
-			"token":    token,
+			"code":    code,
+			"message": "登录成功！",
+			//"msg":     e.MsgFlags[code],
+			"data": map[string]interface{}{
+				"username": user.Username,
+				"token":    token,
+			},
 		})
 		return
 	}
@@ -54,7 +57,7 @@ func Login(c *gin.Context) {
 	code = e.LOGIN_FAILED
 	c.JSON(http.StatusOK, gin.H{
 		"code": code,
-		"msg":  e.MsgFlags[code],
+		"message":  e.MsgFlags[code],
 	})
 	return
 }

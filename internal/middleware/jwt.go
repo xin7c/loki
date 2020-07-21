@@ -18,7 +18,7 @@ func JWT() gin.HandlerFunc {
 		if s, exist := c.GetQuery("token"); exist {
 			token = s
 		} else {
-			token = c.GetHeader("token")
+			token = c.GetHeader("X-Token")
 		}
 		if token == "" {
 			ecode = e.HEADER_NEED_TOKEN
@@ -31,13 +31,15 @@ func JWT() gin.HandlerFunc {
 				default:
 					ecode = e.ERROR_AUTH_CHECK_TOKEN_FAIL
 				}
-				log.Printf("[middleware]ParseToken failed!! %s", err)
+				log.Printf("[middleware]ParseToken failed!! %s : %s", err, ecode)
 			}
 		}
+		log.Println(token)
+
 		if ecode != e.SUCCESS {
 			c.JSON(http.StatusOK, gin.H{
 				"code": ecode,
-				"msg":  e.GetMsg(ecode),
+				"message":  e.GetMsg(ecode),
 			})
 			c.Abort()
 			return

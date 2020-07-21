@@ -28,7 +28,7 @@ func Add(c *gin.Context) {
 			code = e.DUPLICATE_USERNAME
 			c.JSON(http.StatusOK, gin.H{
 				"code": code,
-				"msg":  e.MsgFlags[code],
+				"message":  e.MsgFlags[code],
 			})
 			return
 		}
@@ -39,7 +39,7 @@ func Add(c *gin.Context) {
 			log.Printf("/add %s", encodePasswordError)
 			c.JSON(http.StatusOK, gin.H{
 				"code": code,
-				"msg":  e.MsgFlags[code],
+				"message":  e.MsgFlags[code],
 			})
 			return
 		}
@@ -58,7 +58,7 @@ func Add(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"code": code,
-		"msg":  e.MsgFlags[code],
+		"message":  e.MsgFlags[code],
 	})
 	return
 }

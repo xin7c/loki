@@ -21,7 +21,7 @@ func Ping(c *gin.Context) {
 	code = e.SUCCESS
 	c.JSON(http.StatusOK, gin.H{
 		"code": code,
-		"msg":  "pong",
+		"message":  "pong",
 		"time": timeNowStr,
 	})
 	return

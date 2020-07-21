@@ -10,7 +10,7 @@ func Logout(c *gin.Context) {
 	code := e.SUCCESS
 	c.JSON(http.StatusOK, gin.H{
 		"code": code,
-		"msg":  e.MsgFlags[code],
+		"message":  e.MsgFlags[code],
 		"data": "登出成功",
 	})
 	return

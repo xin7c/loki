@@ -34,7 +34,7 @@ func InitWsServer() *socketio.Server {
 		log.Printf("连接事件: 用户加入的房间号[%+#v]", s.Rooms())
 		log.Printf("连接事件: 当前系统所有房间[%+#v]", roomlist)
 		connMsg := map[string]interface{}{
-			"msg":     fmt.Sprintf("conn:sid[%s]", s.ID()),
+			"message":     fmt.Sprintf("conn:sid[%s]", s.ID()),
 			"connid":  s.ID(),
 			"roomlen": roomlen,
 			"rooms":   s.Rooms(),
@@ -53,7 +53,7 @@ func InitWsServer() *socketio.Server {
 		roomlist := server.Rooms("/")
 		server.BroadcastToRoom("/", room, "join",
 			map[string]interface{}{
-				"msg":      fmt.Sprintf("[%s]加入房间%s[@%d]", username, room, time.Now().Unix()),
+				"message":      fmt.Sprintf("[%s]加入房间%s[@%d]", username, room, time.Now().Unix()),
 				"roomid":   room,
 				"roomlen":  roomlen,
 				"roomlist": roomlist, //s.Rooms(),
@@ -87,7 +87,7 @@ func InitWsServer() *socketio.Server {
 		//s.Emit("chat", "chat: " + msg + " SID:/ => chat: " + s.ID())
 		server.BroadcastToRoom("/", room, "chat",
 			map[string]interface{}{
-				"msg": fmt.Sprintf("[%s]在房间%s[@%d]说: %s", username, room, time.Now().Unix(), msg),
+				"message": fmt.Sprintf("[%s]在房间%s[@%d]说: %s", username, room, time.Now().Unix(), msg),
 			})
 		return "recv " + msg
 	})

@@ -19,4 +19,4 @@ Database:
 JWT:
   Secret: loki-Secret
   Issuer: loki-service
-  Expire: 600
+  Expire: 10
