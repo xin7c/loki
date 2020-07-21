@@ -2,7 +2,6 @@ package user
 
 import (
 	"fmt"
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"log"
 	"loki/global"
@@ -14,31 +13,13 @@ import (
 )
 
 func GetUserInfo(c *gin.Context) {
+	var err error
 	code := e.SUCCESS
 	token := c.GetHeader("token")
-	var err error
-	var m *app.Claims
-	if token == "" {
-		code = e.INVALID_PARAMS
-	} else {
-		// 解析token是否正确
-		m, err = app.ParseToken(token)
-		if err != nil {
-			switch err.(*jwt.ValidationError).Errors {
-			case jwt.ValidationErrorExpired:
-				code = e.ERROR_AUTH_CHECK_TOKEN_TIMEOUT
-			default:
-				code = e.ERROR_AUTH_CHECK_TOKEN_FAIL
-			}
-			log.Println("解析token失败 ParseToken failed!!", err)
-			c.JSON(http.StatusOK, gin.H{
-				"code": code,
-				"msg":  e.GetMsg(code),
-			})
-			return
-		}
-		log.Println("解析token是否正确:", m.AppKey, m.AppSecret)
-	}
+	// 因为jwt中间件处理过了所以放心食用
+	m, _ := app.ParseToken(token)
+	log.Printf("解析token是否正确: %s - %s", m.AppKey, m.AppSecret)
+
 	// 获取username并查询权限信息
 	var user model.User
 	err = c.ShouldBindJSON(&user)
@@ -55,7 +36,6 @@ func GetUserInfo(c *gin.Context) {
 		})
 		return
 	}
-
 	err = user.GetUserInfo(global.DBEngine)
 	if err != nil {
 		log.Printf("userInfo.GetUserInfo(global.DBEngine): %s", err)

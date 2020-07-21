@@ -1,3 +1,9 @@
+Server:
+  RunMode: debug
+  HttpPort: 10900
+  ReadTimeOut: 60
+  WriteTimeOut: 60
+
 Database:
   DBType: mysql
   Username: root
@@ -13,4 +19,4 @@ Database:
 JWT:
   Secret: loki-Secret
   Issuer: loki-service
-  Expire: 7200
+  Expire: 600

@@ -16,6 +16,7 @@ var MsgFlags = map[int]string{
 	DUPLICATE_USERNAME:             "用户名重复",
 	USER_NOT_FOUND:                 "用户不存在",
 	USERINFO_CHECK_JWT_FAILED:      "用户信息校验失败",
+	HEADER_NEED_TOKEN:              "缺少token",
 }
 
 func GetMsg(code int) string {

@@ -2,6 +2,13 @@ package setting
 
 import "time"
 
+type ServerSettingS struct {
+	RunMode      string
+	HttpPort     string
+	ReadTimeOut  time.Duration
+	WriteTimeOut time.Duration
+}
+
 type DatabaseSettingS struct {
 	DBType       string
 	Username     string

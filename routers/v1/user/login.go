@@ -35,11 +35,13 @@ func Login(c *gin.Context) {
 	// 密码验证
 	passwordIsOk := util.ValidatePassword(user.Password, loginPassword)
 	log.Println("用户输入密码验证", passwordIsOk)
-	token, err := app.GenerateToken(user.Username, user.Password)
-	if err != nil {
-		log.Println(err)
-	}
+	// 验证密码通过
 	if passwordIsOk {
+		token, err := app.GenerateToken(user.Username, user.Password)
+		if err != nil {
+			code = e.ERROR
+			log.Printf("passwordIsOk - 生成token err: %s", err)
+		}
 		c.JSON(http.StatusOK, gin.H{
 			"code":     code,
 			"msg":      e.MsgFlags[code],
@@ -48,6 +50,7 @@ func Login(c *gin.Context) {
 		})
 		return
 	}
+	// 判断密码不匹配
 	code = e.LOGIN_FAILED
 	c.JSON(http.StatusOK, gin.H{
 		"code": code,

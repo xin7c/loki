@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
 	"loki/global"
@@ -18,12 +19,17 @@ func setupSetting() error {
 	if err != nil {
 		return err
 	}
+	if err = lokiSetting.ReadSection("Server", &global.ServerSetting); err != nil {
+		return err
+	}
 	if err = lokiSetting.ReadSection("Database", &global.DatabaseSetting); err != nil {
 		return err
 	}
 	if err = lokiSetting.ReadSection("JWT", &global.JWTSetting); err != nil {
 		return err
 	}
+	global.ServerSetting.ReadTimeOut *= time.Second
+	global.ServerSetting.WriteTimeOut *= time.Second
 	global.JWTSetting.Expire *= time.Second
 	return nil
 }
@@ -38,6 +44,8 @@ func setupDBEngine() error {
 }
 
 func init() {
+	//env := os.Getenv("ENV")
+	//log.Printf("env: %s", env)
 	err := setupSetting()
 	if err != nil {
 		log.Fatalf("setupSetting err: %v", err)
@@ -51,6 +59,7 @@ func init() {
 func main() {
 	// 创建一个默认的路由引擎
 	r := gin.Default()
+	gin.SetMode(global.ServerSetting.RunMode)
 	server := InitWsServer()
 	go server.Serve()
 	defer server.Close()
@@ -65,7 +74,7 @@ func main() {
 		apiv1.POST("/get_users", user.GetUsers)
 
 	}
-	//r.Use(Cors())
+	r.Use(Cors())
 	r.GET("/auth", v1.GetAuth)
 	r.POST("/add", user.Add)
 	r.POST("/login", user.Login)
@@ -74,7 +83,7 @@ func main() {
 	r.GET("/socket.io/*any", gin.WrapH(server))
 	r.POST("/socket.io/*any", gin.WrapH(server))
 	//r.StaticFS("/public", http.Dir("/Users/xuchu/xcgo/loki/asset"))
-	err := r.Run(":10900")
+	err := r.Run(fmt.Sprintf(":%s", global.ServerSetting.HttpPort))
 	if err != nil {
 		log.Println(err)
 	}

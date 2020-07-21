@@ -16,4 +16,5 @@ const (
 	DUPLICATE_USERNAME             = 30002
 	USER_NOT_FOUND                 = 30003
 	USERINFO_CHECK_JWT_FAILED      = 30004
+	HEADER_NEED_TOKEN              = 30005
 )

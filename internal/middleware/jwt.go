@@ -21,7 +21,7 @@ func JWT() gin.HandlerFunc {
 			token = c.GetHeader("token")
 		}
 		if token == "" {
-			ecode = e.INVALID_PARAMS
+			ecode = e.HEADER_NEED_TOKEN
 		} else {
 			_, err := app.ParseToken(token)
 			if err != nil {
