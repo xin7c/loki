@@ -58,11 +58,11 @@ func init() {
 
 func main() {
 	// 创建一个默认的路由引擎
-	r := gin.Default()
 	gin.SetMode(global.ServerSetting.RunMode)
-	server := InitWsServer()
-	go server.Serve()
-	defer server.Close()
+	r := gin.Default()
+	//server := InitWsServer()
+	//go server.Serve()
+	//defer server.Close()
 
 	apiv1 := r.Group("/api/v1")
 	apiv1.Use(middleware.TimeNow())
@@ -75,14 +75,14 @@ func main() {
 
 	}
 	r.Use(Cors())
-	r.GET("/auth", v1.GetAuth)
+	//r.GET("/auth", v1.GetAuth)
 	r.POST("/add", user.Add)
 	r.POST("/login", user.Login)
 	r.POST("/modify", user.Modify)
 	r.GET("/logout", user.Logout)
-	r.GET("/ws", v1.Ws)
-	r.GET("/socket.io/*any", gin.WrapH(server))
-	r.POST("/socket.io/*any", gin.WrapH(server))
+	//r.GET("/ws", v1.Ws)
+	//r.GET("/socket.io/*any", gin.WrapH(server))
+	//r.POST("/socket.io/*any", gin.WrapH(server))
 	//r.StaticFS("/public", http.Dir("/Users/xuchu/xcgo/loki/asset"))
 	err := r.Run(fmt.Sprintf(":%s", global.ServerSetting.HttpPort))
 	if err != nil {

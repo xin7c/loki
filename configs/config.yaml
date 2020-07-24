@@ -15,8 +15,9 @@ Database:
   Parsetime: True
   MaxIdleConns: 10
   MaxOpenConns: 10
+  LogModeBool: true
 
 JWT:
   Secret: loki-Secret
   Issuer: loki-service
-  Expire: 10
+  Expire: 60

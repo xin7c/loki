@@ -20,6 +20,7 @@ type DatabaseSettingS struct {
 	Parsetime    bool
 	MaxIdleConns int
 	MaxOpenConns int
+	LogModeBool  bool
 }
 
 type JWTSettingS struct {
