@@ -1,4 +1,0 @@
-{
-    "username": "loki@liveme.com",
-    "password": "222222"
-}
