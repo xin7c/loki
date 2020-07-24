@@ -26,7 +26,7 @@ func GetUsers(c *gin.Context) {
 	for _, v := range users {
 		eu := ExistingUser{
 			Username: v.Username,
-			UserType: v.Usertype.String,
+			UserType: v.UserType.String,
 		}
 		eus = append(eus, eu)
 	}

@@ -54,12 +54,19 @@ func Modify(c *gin.Context) {
 		}
 		log.Printf("新密码加密结果：%s", encodePWD)
 		err = modifyUser.Modify(global.DBEngine, encodePWD)
+		c.JSON(http.StatusOK, gin.H{
+			"code":    code,
+			"message": e.MsgFlags[code],
+			"data":    "修改密码成功",
+		})
+		return
 	}
-
+	// 判断密码不匹配
+	code = e.MODIFY_VERIFY_PASSWORD_FAILED
 	c.JSON(http.StatusOK, gin.H{
 		"code":    code,
 		"message": e.MsgFlags[code],
-		"data":    "修改密码成功",
 	})
 	return
+
 }

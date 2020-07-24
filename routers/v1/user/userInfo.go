@@ -51,7 +51,7 @@ func GetUserInfo(c *gin.Context) {
 		"code":    code,
 		"message": e.GetMsg(code),
 		"data": map[string]interface{}{
-			"roles":        user.Usertype.String,
+			"roles":        user.UserType.String,
 			"introduction": fmt.Sprintf("I am %s", user.Username),
 			"avatar":       "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
 			"name":         user.Username,

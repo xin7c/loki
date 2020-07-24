@@ -17,6 +17,7 @@ var MsgFlags = map[int]string{
 	USER_NOT_FOUND:                 "用户不存在",
 	USERINFO_CHECK_JWT_FAILED:      "用户信息校验失败",
 	HEADER_NEED_TOKEN:              "缺少token",
+	MODIFY_VERIFY_PASSWORD_FAILED:  "修改密码验证失败",
 }
 
 func GetMsg(code int) string {
