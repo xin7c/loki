@@ -75,7 +75,7 @@ func main() {
 
 	}
 	r.Use(Cors())
-	//r.GET("/auth", v1.GetAuth)
+	r.GET("/auth", v1.GetAuth)
 	r.POST("/add", user.Add)
 	r.POST("/login", user.Login)
 	r.POST("/modify", user.Modify)
