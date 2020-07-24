@@ -38,8 +38,8 @@ func JWT() gin.HandlerFunc {
 
 		if ecode != e.SUCCESS {
 			c.JSON(http.StatusOK, gin.H{
-				"code": ecode,
-				"message":  e.GetMsg(ecode),
+				"code":    ecode,
+				"message": e.GetMsg(ecode),
 			})
 			c.Abort()
 			return

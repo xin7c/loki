@@ -27,8 +27,8 @@ func Add(c *gin.Context) {
 			log.Printf("用户名%s已存在！", userStruct.Username)
 			code = e.DUPLICATE_USERNAME
 			c.JSON(http.StatusOK, gin.H{
-				"code": code,
-				"message":  e.MsgFlags[code],
+				"code":    code,
+				"message": e.MsgFlags[code],
 			})
 			return
 		}
@@ -38,8 +38,8 @@ func Add(c *gin.Context) {
 			code = e.ERROR
 			log.Printf("/add %s", encodePasswordError)
 			c.JSON(http.StatusOK, gin.H{
-				"code": code,
-				"message":  e.MsgFlags[code],
+				"code":    code,
+				"message": e.MsgFlags[code],
 			})
 			return
 		}
@@ -57,8 +57,8 @@ func Add(c *gin.Context) {
 		log.Println("参数错误")
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"code": code,
-		"message":  e.MsgFlags[code],
+		"code":    code,
+		"message": e.MsgFlags[code],
 	})
 	return
 }

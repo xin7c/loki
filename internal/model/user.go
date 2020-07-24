@@ -16,6 +16,10 @@ func (user User) Add(db *gorm.DB) error {
 	return db.Create(&user).Error
 }
 
+func (user User) Modify(db *gorm.DB, encodePWD string) error {
+	return db.Model(&user).Update("password", encodePWD).Error
+}
+
 func (user User) GetUsers(db *gorm.DB) error {
 	return db.Create(&user).Error
 }

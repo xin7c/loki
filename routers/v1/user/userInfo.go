@@ -23,7 +23,7 @@ func GetUserInfo(c *gin.Context) {
 	// 获取username并查询权限信息
 	var user model.User
 	err = c.ShouldBindJSON(&user)
-	log.Println("获取username并查询权限信息: ",user)
+	log.Println("获取username并查询权限信息: ", user)
 	if err != nil {
 		log.Printf("获取username并查询权限信息 绑定结构体user: %s", err)
 	}
@@ -31,8 +31,8 @@ func GetUserInfo(c *gin.Context) {
 	if !(util.EncodeMD5(user.Username) == m.AppKey) {
 		code = e.USERINFO_CHECK_JWT_FAILED
 		c.JSON(http.StatusOK, gin.H{
-			"code": code,
-			"message":  e.GetMsg(code),
+			"code":    code,
+			"message": e.GetMsg(code),
 		})
 		return
 	}
@@ -41,15 +41,15 @@ func GetUserInfo(c *gin.Context) {
 		log.Printf("userInfo.GetUserInfo(global.DBEngine): %s", err)
 		code = e.USER_NOT_FOUND
 		c.JSON(http.StatusOK, gin.H{
-			"code": code,
-			"message":  e.GetMsg(code),
+			"code":    code,
+			"message": e.GetMsg(code),
 		})
 		return
 	}
 	// log.Println("user.GetUserInfo(global.DBEngine): ",user)
 	c.JSON(http.StatusOK, gin.H{
-		"code": code,
-		"message":  e.GetMsg(code),
+		"code":    code,
+		"message": e.GetMsg(code),
 		"data": map[string]interface{}{
 			"roles":        user.Usertype.String,
 			"introduction": fmt.Sprintf("I am %s", user.Username),

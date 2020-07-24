@@ -26,8 +26,8 @@ func Login(c *gin.Context) {
 		log.Printf("用户名不存在: %s", err)
 		code := e.USER_NOT_FOUND
 		c.JSON(http.StatusOK, gin.H{
-			"code": code,
-			"message":  e.MsgFlags[code],
+			"code":    code,
+			"message": e.MsgFlags[code],
 		})
 		return
 	}
@@ -56,8 +56,8 @@ func Login(c *gin.Context) {
 	// 判断密码不匹配
 	code = e.LOGIN_FAILED
 	c.JSON(http.StatusOK, gin.H{
-		"code": code,
-		"message":  e.MsgFlags[code],
+		"code":    code,
+		"message": e.MsgFlags[code],
 	})
 	return
 }

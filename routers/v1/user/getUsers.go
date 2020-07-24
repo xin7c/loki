@@ -33,8 +33,8 @@ func GetUsers(c *gin.Context) {
 	log.Println(eus)
 	code = e.SUCCESS
 	c.JSON(http.StatusOK, gin.H{
-		"code": code,
-		"message":  eus,
+		"code":    code,
+		"message": eus,
 	})
 	return
 }

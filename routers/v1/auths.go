@@ -17,8 +17,8 @@ func Auths(c *gin.Context) {
 	}
 	code = e.SUCCESS
 	c.JSON(http.StatusOK, gin.H{
-		"code": code,
-		"message":  as,
+		"code":    code,
+		"message": as,
 	})
 	return
 }
