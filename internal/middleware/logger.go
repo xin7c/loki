@@ -1,16 +1,29 @@
 package middleware
 
 import (
+	"bytes"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/rifflock/lfshook"
 	"github.com/sirupsen/logrus"
+	"io/ioutil"
 	"log"
 	"loki/global"
 	"os"
 	"path"
 	"time"
 )
+
+type bodyLogWriter struct {
+	gin.ResponseWriter
+	body *bytes.Buffer
+}
+
+func (w bodyLogWriter) Write(b []byte) (int, error) {
+	w.body.Write(b)
+	return w.ResponseWriter.Write(b)
+}
 
 // 日志记录到文件
 func LoggerToFile() gin.HandlerFunc {
@@ -57,6 +70,15 @@ func LoggerToFile() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 开始时间
 		startTime := time.Now()
+		// 写请求
+		blw := &bodyLogWriter{
+			ResponseWriter: c.Writer,
+			body:           bytes.NewBufferString(""),
+		}
+		c.Writer = blw
+		reqBody, _ := ioutil.ReadAll(c.Request.Body)
+		fmt.Println(c.Request.Body)
+		c.Request.Body = ioutil.NopCloser(bytes.NewReader(reqBody))
 		// 处理请求
 		c.Next()
 		// 结束时间
@@ -71,7 +93,8 @@ func LoggerToFile() gin.HandlerFunc {
 		statusCode := c.Writer.Status()
 		// 请求IP
 		clientIP := c.ClientIP()
-		data := c.GetString("data")
+		RequestBody := string(reqBody)
+		ResponseBody := blw.body.String()
 		// 日志格式
 		logger.WithFields(logrus.Fields{
 			"status_code":  statusCode,
@@ -79,7 +102,8 @@ func LoggerToFile() gin.HandlerFunc {
 			"client_ip":    clientIP,
 			"req_method":   reqMethod,
 			"req_uri":      reqUri,
-			"data":         data,
+			"RequestBody":  RequestBody,
+			"ResponseBody": ResponseBody,
 		}).Info()
 	}
 }

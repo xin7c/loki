@@ -69,7 +69,7 @@ func main() {
 
 	apiv1 := r.Group("/api/v1")
 	apiv1.Use(middleware.TimeNow())
-	apiv1.Use(Cors(),middleware.LoggerToFile(), middleware.JWT())
+	apiv1.Use(Cors(), middleware.LoggerToFile(), middleware.JWT())
 	{
 		apiv1.GET("/ping", v1.Ping)
 		apiv1.GET("/as", v1.Auths)

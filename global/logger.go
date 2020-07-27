@@ -12,6 +12,8 @@ import (
 	"time"
 )
 
+var Logger *logrus.Logger
+
 func setupSetting() error {
 	lokiSetting, err := setting.NewSetting()
 	if err != nil {
@@ -28,9 +30,10 @@ func init() {
 	if err != nil {
 		log.Fatalf("setupSetting err: %v", err)
 	}
+	NewLogger()
 }
 
-func NewLogger() *logrus.Logger {
+func NewLogger() {
 	logFilePath := LogrusSettingS.Log_FILE_PATH
 	logFileName := LogrusSettingS.LOG_FILE_NAME
 	// 日志文件
@@ -70,5 +73,5 @@ func NewLogger() *logrus.Logger {
 	})
 	// 新增 Hook
 	logger.AddHook(lfHook)
-	return logger
+	Logger = logger
 }

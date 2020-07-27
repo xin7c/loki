@@ -51,7 +51,6 @@ func Login(c *gin.Context) {
 				"token":    token,
 			},
 		})
-		c.Set("data", "登录成功")
 		return
 	}
 	// 判断密码不匹配
