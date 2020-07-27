@@ -29,6 +29,11 @@ type JWTSettingS struct {
 	Expire time.Duration
 }
 
+type LogrusSettingS struct {
+	Log_FILE_PATH string
+	LOG_FILE_NAME string
+}
+
 func (s *Setting) ReadSection(k string, v interface{}) error {
 	if err := s.vp.UnmarshalKey(k, v); err != nil {
 		return err

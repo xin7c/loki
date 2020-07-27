@@ -7,4 +7,5 @@ var (
 	ServerSetting   *setting.ServerSettingS
 	DatabaseSetting *setting.DatabaseSettingS
 	JWTSetting      *setting.JWTSettingS
+	LogrusSettingS  *setting.LogrusSettingS
 )

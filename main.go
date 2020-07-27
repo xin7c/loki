@@ -28,6 +28,9 @@ func setupSetting() error {
 	if err = lokiSetting.ReadSection("JWT", &global.JWTSetting); err != nil {
 		return err
 	}
+	if err = lokiSetting.ReadSection("Logrus", &global.LogrusSettingS); err != nil {
+		return err
+	}
 	global.ServerSetting.ReadTimeOut *= time.Second
 	global.ServerSetting.WriteTimeOut *= time.Second
 	global.JWTSetting.Expire *= time.Second
@@ -66,7 +69,7 @@ func main() {
 
 	apiv1 := r.Group("/api/v1")
 	apiv1.Use(middleware.TimeNow())
-	apiv1.Use(Cors(), middleware.JWT())
+	apiv1.Use(Cors(),middleware.LoggerToFile(), middleware.JWT())
 	{
 		apiv1.GET("/ping", v1.Ping)
 		apiv1.GET("/as", v1.Auths)
@@ -74,7 +77,7 @@ func main() {
 		apiv1.POST("/get_users", user.GetUsers)
 
 	}
-	r.Use(Cors())
+	r.Use(Cors(), middleware.LoggerToFile())
 	r.GET("/auth", v1.GetAuth)
 	r.POST("/add", user.Add)
 	r.POST("/login", user.Login)

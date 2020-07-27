@@ -1,0 +1,2 @@
+{"client_ip":"127.0.0.1","data":"","latency_time":70321,"level":"info","msg":"","req_method":"GET","req_uri":"/logout","status_code":200,"time":"2020-07-27 14:11:16"}
+{"client_ip":"127.0.0.1","data":"","latency_time":72000,"level":"info","msg":"","req_method":"GET","req_uri":"/logout","status_code":200,"time":"2020-07-27 14:11:51"}

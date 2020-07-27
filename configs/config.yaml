@@ -21,3 +21,7 @@ JWT:
   Secret: loki-Secret
   Issuer: loki-service
   Expire: 60
+
+Logrus:
+  Log_FILE_PATH: log
+  LOG_FILE_NAME: loki

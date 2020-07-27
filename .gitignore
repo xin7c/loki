@@ -73,5 +73,5 @@ fabric.properties
 .idea
 
 loki
-
+/log/loki
 ab/
