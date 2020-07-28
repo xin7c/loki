@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"bytes"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/rifflock/lfshook"
@@ -30,10 +29,12 @@ func LoggerToFile() gin.HandlerFunc {
 	logFilePath := global.LogrusSettingS.Log_FILE_PATH
 	logFileName := global.LogrusSettingS.LOG_FILE_NAME
 	// 日志文件
+	//dir, _ := os.Getwd()
 	fileName := path.Join(logFilePath, logFileName)
 	log.Println(fileName)
 	// 写入文件
-	src, err := os.OpenFile(fileName, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0755)
+	//src, err := os.OpenFile(fileName, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
+	src, err := os.OpenFile(os.DevNull, os.O_WRONLY|os.O_APPEND, os.ModeAppend)
 	if err != nil {
 		log.Printf("写入文件err: %s", err)
 	}
@@ -77,7 +78,6 @@ func LoggerToFile() gin.HandlerFunc {
 		}
 		c.Writer = blw
 		reqBody, _ := ioutil.ReadAll(c.Request.Body)
-		fmt.Println(c.Request.Body)
 		c.Request.Body = ioutil.NopCloser(bytes.NewReader(reqBody))
 		// 处理请求
 		c.Next()
@@ -93,7 +93,7 @@ func LoggerToFile() gin.HandlerFunc {
 		statusCode := c.Writer.Status()
 		// 请求IP
 		clientIP := c.ClientIP()
-		RequestBody := string(reqBody)
+		//RequestBody := string(reqBody)
 		ResponseBody := blw.body.String()
 		// 日志格式
 		logger.WithFields(logrus.Fields{
@@ -102,7 +102,7 @@ func LoggerToFile() gin.HandlerFunc {
 			"client_ip":    clientIP,
 			"req_method":   reqMethod,
 			"req_uri":      reqUri,
-			"RequestBody":  RequestBody,
+			//"RequestBody":  RequestBody,
 			"ResponseBody": ResponseBody,
 		}).Info()
 	}
