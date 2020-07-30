@@ -3,9 +3,7 @@
 ## odin登录服务
 
 #### 创建mysql-docker
-`docker run -d -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=123456 mysql`
-#### mysql备份参考
-`docker run -d -p 3306:3306 --name mysql -v /data:/var/lib/mysql -e MYSQL_PASS="mypass" mysql`
+`docker run -d -p 3306:3306 --name mysql -v /data/loki_data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=odin-loki mysql`
 
 ### 简单压测
 -n ：总共的请求执行数，缺省是1；  

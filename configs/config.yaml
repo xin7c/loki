@@ -6,10 +6,13 @@ Server:
 
 Database:
   DBType: mysql
-  Username: root
-  Password: 123456
-  Host: 10.60.129.61:3306
-  DBName: loki
+  #  Host: 10.60.129.61:3306
+  #  Username: root
+  #  Password: 123456
+  Host: 10.61.153.77:3306
+  Username: adminm
+  Password: adminm
+  DBName: odin-inner
   TablePrefix: Loki_
   Charset: utf8
   Parsetime: True
@@ -20,7 +23,7 @@ Database:
 JWT:
   Secret: loki-Secret
   Issuer: loki-service
-  Expire: 60
+  Expire: 604800
 
 Logrus:
   Log_FILE_PATH: log
