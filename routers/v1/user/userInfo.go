@@ -2,7 +2,6 @@ package user
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"log"
 	"loki/global"
 	"loki/internal/model"
@@ -10,6 +9,8 @@ import (
 	"loki/pkg/e"
 	"loki/pkg/util"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func GetUserInfo(c *gin.Context) {

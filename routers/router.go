@@ -2,21 +2,25 @@ package routers
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	socketio "github.com/googollee/go-socket.io"
 	"log"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	socketio "github.com/googollee/go-socket.io"
 )
 
 // 处理跨域请求,支持options访问
 func Cors() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		// w := c.Writer
+		// 可能解决了withCredentials: true后端不放行的问题，但是前端没传过来cookies
+		r := c.Request
 		method := c.Request.Method
 		//log.Println(method)
-		c.Header("Access-Control-Allow-Origin", "*")
+		c.Header("Access-Control-Allow-Origin", r.Header.Get("Origin"))
 		c.Header("Access-Control-Allow-Headers", "Content-Type,AccessToken,"+
 			"X-CSRF-Token, Authorization,"+
-			"Token, X-Token")
+			"Token, X-Token, X-Uname")
 		c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, PATCH, DELETE")
 		c.Header("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type")
 		c.Header("Access-Control-Allow-Credentials", "true")

@@ -14,4 +14,5 @@
 get 
 `ab -c 100 -n 300 -w http://0.0.0.0:10900/auth >> ./ab/get.html`
 post    
-`ab -c 100 -n 3000 -p ./ab/post.txt -T application/x-www-form-urlencoded http://0.0.0.0:10900/login`
+`ab -c 10 -n 3000 -w -p ./ab/post.txt -T application/x-www-form-urlencoded http://10.61.153.83:10900/login >> ./ab/post-loki.html`
+`ab -c 10 -n 3000 -w -p ./ab/post.txt -T application/x-www-form-urlencoded http://54.85.231.46:8887/user/login >> ./ab/post.html`
