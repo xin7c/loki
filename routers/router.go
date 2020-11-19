@@ -16,7 +16,7 @@ func Cors() gin.HandlerFunc {
 		// 可能解决了withCredentials: true后端不放行的问题，但是前端没传过来cookies
 		r := c.Request
 		method := r.Method
-		//log.Println(method)
+		log.Println(method)
 		c.Header("Access-Control-Allow-Origin", r.Header.Get("Origin"))
 		c.Header("Access-Control-Allow-Headers", "Content-Type,AccessToken,"+
 			"X-CSRF-Token, Authorization,"+
